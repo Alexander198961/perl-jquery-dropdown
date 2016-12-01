@@ -3,17 +3,53 @@ use strict;
 use warnings;
 use CGI;
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:database=test;host=localhost",
-                         "root", "root",
-                         {'RaiseError' => 1});
-#if ($action eq "view") {
+my $dbh;
+open( my $fh, '>>', "logfile" );
+
+my $table_name="tutorials";
+my $column_name="title";
+# Or oracle:db_name
+
+my $db_name="mysql:test";
+#my $db_name="oracle:db_name_here";
+
+
+my $user="root";
+
+my $password="root";
+
+
 print qq(Content-type: text/html\n\n);
+eval
+{
+	 #$ENV{ORACLE_SID} = $;
+	 #  $dbh = DBI->connect( "dbi:Oracle:", "", "", { ora_session_mode => ORA_SYSDBA } );
+	#$dbh = DBI->connect("dbi:Oracle:$dbname", $user, $passwd);
+	$dbh = DBI->connect("DBI:$db_name",
+                         $user, $password,
+                         {'RaiseError' => 1});
+};
+if($@)
+{
+	print $fh $@;
+	die("couldn't connect $@");
+}
+
+
 my $query = new CGI;
 my $name=$query->param('name');
-my $myquery1 = "SELECT title from tutorials where title like '%$name%'";
-my $sth = $dbh->prepare($myquery1);
+my $sth;
+eval
+{
+my $myquery1 = "SELECT $column_name  from $table_name where title like '%$name%'";
+$sth = $dbh->prepare($myquery1);
 $sth->execute();
-#print "<select size=\"5\">";
+};
+if($@)
+{
+  print $fh $@;
+  die("coldn't connect $@");  
+}
 my $count=0;
 my @array;
 
@@ -28,4 +64,5 @@ $id++;
 print "<option    value=\"$_\" id=\"$id\" onclick=\"select(this)\">$_</option>";
 
 }
-print "</select>";  
+print "</select>"; 
+close $fh;
