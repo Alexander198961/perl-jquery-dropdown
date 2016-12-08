@@ -19,7 +19,7 @@ function select(el)
 
 var selector="#".concat(el.id)
 var selectedText=\$(selector).val()
-\$("#dropDownvaule").val(selectedText)
+\$("#maincontainer").val(selectedText)
 }
 function unhide()
 {
@@ -64,8 +64,7 @@ alert(value)
 </script>
 
 <form action="action.pl">
-<table><tr><td style="vertical-align: top;"> <a  href="#" onclick="unhide()">View Page</a> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" /> </td> </tr></table>
-<tr><input type="hidden" name="dropDownvaule" id="dropDownvaule" /></tr>
+<table><tr><td style="vertical-align: top;"> <input type="button" onclick="unhide()" value="View Page"  /> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" /> </td> </tr></table>
 </form>
 
 </body>
