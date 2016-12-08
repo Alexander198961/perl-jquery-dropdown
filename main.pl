@@ -19,7 +19,7 @@ function select(el)
 
 var selector="#".concat(el.id)
 var selectedText=\$(selector).val()
-\$("#maincontainer").val(selectedText)
+\$("#dropDownvalue").val(selectedText)
 }
 function unhide()
 {
@@ -65,6 +65,7 @@ alert(value)
 
 <form action="action.pl">
 <table><tr><td style="vertical-align: top;"> <input type="button" onclick="unhide()" value="View Page"  /> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" /> </td> </tr></table>
+<input type="hidden" name="dropDownvalue" id="dropDownvalue" />
 </form>
 
 </body>
