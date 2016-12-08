@@ -55,7 +55,6 @@ push(@array,$rows[0]);
 $count++;  
 }
 my $id=0;
-use Data::Dumper;
 print "<select size=\"$count\">";
 foreach  (@array) {
 $id++;	
