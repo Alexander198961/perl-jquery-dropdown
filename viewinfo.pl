@@ -4,7 +4,6 @@ use warnings;
 use CGI;
 use DBI;
 use DBD::Oracle;
-#exit(1);
 my $dbh;
 open( my $fh, '>>', "logfile" );
 
@@ -26,7 +25,7 @@ eval
 };
 if($@)
 {
-	print $@;
+#	print $@;
 	print $fh $@;
 	die("couldn't connect $@");
 }
@@ -37,13 +36,13 @@ my $sth;
 eval
 {
 
-my $myquery1 = "SELECT $column_name  from $table_name where $column_name like '%$name%'";
+my $myquery1 = "SELECT $column_name  from $table_name ";
 $sth = $dbh->prepare($myquery1);
 $sth->execute();
 };
 if($@)
 {
-	 print $@;
+#	 print $@;
 	print $fh $@;
   die("coldn't connect $@");  
 }

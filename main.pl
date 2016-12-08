@@ -19,22 +19,21 @@ function select(el)
 
 var selector="#".concat(el.id)
 var selectedText=\$(selector).val()
-\$("#maincontainer").val(selectedText)
-\$("#droplist").html("")
+\$("#dropDownvaule").val(selectedText)
 }
 function unhide()
 {
    
+
  \$("#maincontainer").removeAttr("hidden");
+ \$("#submit").removeAttr("hidden");
+capture()
 }
 
 function capture()
 {
-var input=\$("#maincontainer").val().toString()
-
-value="viewinfo.pl?name=".concat(input)
 \$.ajax({
-   url: value,
+   url: "viewinfo.pl",
   cache: false,
   async: false,
   success: function(html){
@@ -64,11 +63,9 @@ alert(value)
 }
 </script>
 
-<form action="">
-<textarea id="maincontainer"  hidden="true" onkeyup="capture()"></textarea>
-<div id="droplist"></div>
-<p><a  href="#" onclick="unhide()">Input</a> </p>
-<input type="submit" value="Submit"></input>
+<form action="action.pl">
+<table><tr><td style="vertical-align: top;"> <a  href="#" onclick="unhide()">View Page</a> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" /> </td> </tr></table>
+<tr><input type="hidden" name="dropDownvaule" id="dropDownvaule" /></tr>
 </form>
 
 </body>
