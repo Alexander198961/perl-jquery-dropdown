@@ -13,6 +13,7 @@ my $column_name="table_name";
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
+my $inserted_table="table1";
 
 
 print qq(Content-type: text/html\n\n);
@@ -31,6 +32,9 @@ if($@)
 }
 
 my $query = new CGI;
+my $sumbitForm=$query->param("sumbitForm");
+if($sumbitForm != 1 || !defined($sumbitForm) )
+{
 my $name=$query->param('name');
 my $sth;
 eval
@@ -61,5 +65,22 @@ $id++;
 print "<option    value=\"$_\" id=\"$id\" onclick=\"select(this)\">$_</option>";
 
 }
-print "</select>"; 
+print "</select>";
+}
+else
+{
+  my $value1= $query->param('textbox');
+  my $value2= $query->param('dropDownvalue');
+  eval
+  {
+	my $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
+	$sth->execute($value1,$value2);
+  };
+  if($@)
+  {
+	  #print $@;
+	  print $fh $@;
+	  die("ERROR $@");
+  }
+}
 close $fh;
