@@ -26,7 +26,6 @@ eval
 };
 if($@)
 {
-#	print $@;
 	print $fh $@;
 	die("couldn't connect $@");
 }
@@ -59,7 +58,7 @@ push(@array,$rows[0]);
 $count++;  
 }
 my $id=0;
-print "<select size=\"$count\">";
+print "<select>";
 foreach  (@array) {
 $id++;	
 print "<option    value=\"$_\" id=\"$id\" onclick=\"select(this)\">$_</option>";
