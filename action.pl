@@ -7,8 +7,6 @@ use DBD::Oracle;
 my $dbh;
 open( my $fh, '>>', "logfile" );
 
-my $table_name="dba_tables";
-my $column_name="table_name";
 
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
@@ -25,13 +23,12 @@ eval
 };
 if($@)
 {
-#	print $@;
+	print $@;
 	print $fh $@;
 	die("couldn't connect $@");
 }
 
 my $query = new CGI;
-my $sumbitForm=$query->param("sumbitForm");
 my $value1= $query->param('textbox');
 my $value2= $query->param('dropDownvalue');
 eval
@@ -41,7 +38,7 @@ eval
 };
 if($@)
 {
-	  #print $@;
+          print $@;
 	  print $fh $@;
 	  die("ERROR $@");
 }

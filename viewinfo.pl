@@ -31,9 +31,6 @@ if($@)
 }
 
 my $query = new CGI;
-my $sumbitForm=$query->param("sumbitForm");
-if($sumbitForm != 1 || !defined($sumbitForm) )
-{
 my $name=$query->param('name');
 my $sth;
 eval
@@ -57,29 +54,13 @@ while (my @rows = $sth->fetchrow_array) {
 push(@array,$rows[0]);
 $count++;  
 }
-my $id=0;
-print "<select>";
+
+print "<select id=\"mySelect\" onchange=\"select()\">";
+my $first_value= shift @array;
+print "<option  id=\"myid1\"  value=\"$first_value\">$first_value</option>";
 foreach  (@array) {
-$id++;	
-print "<option    value=\"$_\" id=\"$id\" onclick=\"select(this)\">$_</option>";
+print "<option    value=\"$_\">$_</option>";
 
 }
 print "</select>";
-}
-else
-{
-  my $value1= $query->param('textbox');
-  my $value2= $query->param('dropDownvalue');
-  eval
-  {
-	my $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
-	$sth->execute($value1,$value2);
-  };
-  if($@)
-  {
-	  #print $@;
-	  print $fh $@;
-	  die("ERROR $@");
-  }
-}
 close $fh;

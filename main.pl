@@ -14,11 +14,10 @@ my $html = <<EOT;
 if (typeof jQuery == 'undefined') {
  alert('jQuery is not loaded')
 }
-function select(el)
+function select()
 {
+var selectedText=\$("#mySelect").val()
 
-var selector="#".concat(el.id)
-var selectedText=\$(selector).val()
 \$("#dropDownvalue").val(selectedText)
 }
 function unhide()
@@ -26,7 +25,12 @@ function unhide()
    
 
  \$("#maincontainer").removeAttr("hidden");
+
  \$("#submit").removeAttr("hidden");
+
+ \$("#label").removeAttr("hidden");
+ \$("#label1").removeAttr("hidden");
+
 capture()
 }
 
@@ -45,6 +49,8 @@ function capture()
 	alert("failed")	   
   }	  
 });
+
+\$("#dropDownvalue").val(\$("#myid1").val())
 }
 function viewpage(name)
 {
@@ -63,11 +69,10 @@ alert(value)
 }
 </script>
 
-<form action="action.pl" method="post">
-<table><tr><td style="vertical-align: top;"> <input type="button" onclick="unhide()" value="View Page"  /> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" /> </td> </tr></table>
+<form action="action.pl" >
+<table><tr><td></td><td hidden="true" id="label">Drop down list label </td><td id="label1" hidden="true"> Text box label </td><td></td><td></td></tr><tr><td style="vertical-align: top;"> <input type="button" onclick="unhide()" value="View Page"  /> </td><td id="droplist"></td><td style="vertical-align: top;"><input id="maincontainer" type="text"  hidden="true" onkeyup="captures()" name="textbox" /></td>  <td style="vertical-align: top;"><input type="submit" value="Submit" hidden="true" id="submit" onsumbit="select()" /> </td> </tr></table>
 
 <input type="hidden" name="dropDownvalue" id="dropDownvalue" />
-<input type="hidden" name="sumbitForm" value="1" />
 </form>
 
 </body>
