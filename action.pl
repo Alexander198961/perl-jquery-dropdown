@@ -19,7 +19,7 @@ eval
 {
 	$dbh = DBI->connect("DBI:$db_name",
                          $user, $password,
-                         {'RaiseError' => 1});
+                         {'RaiseError' => 1 , ShowErrorStatement => 1} );
 };
 if($@)
 {
@@ -31,10 +31,14 @@ if($@)
 my $query = new CGI;
 my $value1= $query->param('textbox');
 my $value2= $query->param('dropDownvalue');
+my $sth;
 eval
 {
-	my $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
+
+
+         $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
 	$sth->execute($value1,$value2);
+#	$dbh->do("insert into $inserted_table values(  $value1, $value2 )");
 };
 if($@)
 {
