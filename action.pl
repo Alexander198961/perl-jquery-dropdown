@@ -23,7 +23,7 @@ eval
 };
 if($@)
 {
-	print $@;
+#	print $@;
 	print $fh $@;
 	die("couldn't connect $@");
 }
@@ -37,12 +37,12 @@ eval
 
 
          $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
-	$sth->execute($value1,$value2);
+	 $sth->execute("$value1","$value2");
 #	$dbh->do("insert into $inserted_table values(  $value1, $value2 )");
 };
 if($@)
 {
-          print $@;
+ #         print $@;
 	  print $fh $@;
 	  die("ERROR $@");
 }
