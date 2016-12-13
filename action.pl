@@ -23,7 +23,7 @@ eval
 };
 if($@)
 {
-#	print $@;
+	print $@;
 	print $fh $@;
 	die("couldn't connect $@");
 }
@@ -37,12 +37,19 @@ eval
 
 
          $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
+	 if(defined($sth))
+	 {
 	 $sth->execute("$value1","$value2");
+         }
+	 else
+	 {
+		 die("Sth not defined");
+	 }
 #	$dbh->do("insert into $inserted_table values(  $value1, $value2 )");
 };
 if($@)
 {
- #         print $@;
+          print $@;
 	  print $fh $@;
 	  die("ERROR $@");
 }
