@@ -15,6 +15,11 @@ my $inserted_table="table1";
 
 
 print qq(Content-type: text/html\n\n);
+my $html = <<EOT;
+<a href="javascript:history.back(1)">back</a> 
+EOT
+;
+print $html;
 eval
 {
 	$dbh = DBI->connect("DBI:$db_name",
