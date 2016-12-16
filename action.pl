@@ -11,10 +11,11 @@ open( my $fh, '>>', "logfile" );
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
-my $inserted_table="table1";
+my @inserted_tables=( "table1", "table2" ) ;
 
 
 print qq(Content-type: text/html\n\n);
+print $fh "Callled";
 my $html = <<EOT;
 <a href="javascript:history.back(1)">back</a> 
 EOT
@@ -36,12 +37,13 @@ if($@)
 my $query = new CGI;
 my $value1= $query->param('textbox');
 my $value2= $query->param('dropDownvalue');
+my $index=$query->param('index');
 my $sth;
 eval
 {
 
 
-         $sth=$dbh->prepare("insert into $inserted_table values(  ?, ? )");
+         $sth=$dbh->prepare("insert into $inserted_tables[$index] values(  ?, ? )");
 	 if(defined($sth))
 	 {
 	 $sth->execute("$value1","$value2");

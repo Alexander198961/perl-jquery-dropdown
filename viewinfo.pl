@@ -7,13 +7,13 @@ use DBD::Oracle;
 my $dbh;
 open( my $fh, '>>', "logfile" );
 
-my $table_name="dba_tables";
-my $column_name="table_name";
 
+
+my @column_names =("table_name","INFO");
+my @table_names=("dba_tables", "help");
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
-my $inserted_table="table1";
 
 
 print qq(Content-type: text/html\n\n);
@@ -31,12 +31,12 @@ if($@)
 }
 
 my $query = new CGI;
-my $name=$query->param('name');
+my $index=$query->param('index');
 my $sth;
 eval
 {
 
-my $myquery1 = "SELECT $column_name  from $table_name ";
+my $myquery1 = "SELECT $column_names[$index]  from $table_names[$index] ";
 $sth = $dbh->prepare($myquery1);
 $sth->execute();
 };
@@ -55,7 +55,7 @@ push(@array,$rows[0]);
 $count++;  
 }
 
-print "<select id=\"mySelect\" onchange=\"select()\">";
+print "<select id=\"mySelect$index\" onchange=\"select($index)\">";
 my $first_value= shift @array;
 print "<option  id=\"myid1\"  value=\"$first_value\">$first_value</option>";
 foreach  (@array) {
