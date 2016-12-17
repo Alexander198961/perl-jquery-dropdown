@@ -11,13 +11,20 @@ open( my $fh, '>>', "logfile" );
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
-my @inserted_tables=( "table1", "table2" ) ;
+my @inserted_tables=( "table1", "table3" ) ;
+
+my %first_table_object=(
+	column_names => [ "FIELD1" , "FIELD2" ],
+	table_name =>  [ "table1" ]
+);
 
 
+my %second_table_object=(
+	column_names => [ "BETA" , "PAST" ],
+	table_name =>  [ "table3" ]
+);
 print qq(Content-type: text/html\n\n);
-print $fh "Callled";
 my $html = <<EOT;
-<a href="javascript:history.back(1)">back</a> 
 EOT
 ;
 print $html;
@@ -43,10 +50,23 @@ eval
 {
 
 
-         $sth=$dbh->prepare("insert into $inserted_tables[$index] values(  ?, ? )");
+#	 my %current_hash_obj;
+	 if ($index == 0 )
+         {
+
+	  # we may change to insert into table_name(column1,column2)  values(?,?)
+         $sth=$dbh->prepare("insert into $first_table_object{table_name}[0] ($first_table_object{column_names}[0] , $first_table_object{column_names}[1] )  values(  ?, ? )");
+         }
+         else
+         {
+	
+	  # we may change to insert into table_name(column1,column2)  values(?,?)
+         $sth=$dbh->prepare("insert into $second_table_object{table_name}[0] ($second_table_object{column_names}[0] , $second_table_object{column_names}[1] )  values(  ?, ? )");
+         }
+
 	 if(defined($sth))
 	 {
-	 $sth->execute("$value1","$value2");
+	 $sth->execute($value1,$value2);
          }
 	 else
 	 {
@@ -60,4 +80,5 @@ if($@)
 	  print $fh $@;
 	  die("ERROR $@");
 }
+print "Succesfuly inserted";
 close $fh;

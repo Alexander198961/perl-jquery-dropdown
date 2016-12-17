@@ -17,7 +17,10 @@ if (typeof jQuery == 'undefined') {
 }
 function page_view(value )
 {
+    
    \$("#view1").removeAttr("hidden");
+
+    \$("#view2").attr("hidden",1)
     capture(0)
 }
 function select_from_view()
@@ -26,11 +29,15 @@ var selectedView=\$("#select_view").val()
 if (selectedView == "View Page1")
 {
    \$("#view1").removeAttr("hidden");
+
+    \$("#view2").attr("hidden",1)
     capture(0)
 }
 else
 {
 \$("#view2").removeAttr("hidden");
+
+    \$("#view1").attr("hidden",1)
  capture(1)
 }
 }
@@ -67,6 +74,7 @@ var droplist="#droplist"+index
 function sumbit_form(id)
 {
  var dropDownId="#dropDownvalue"+id
+ var capture_relultId="#capture_relult"+id
  var dropDownValue=\$(dropDownId).val() 
  var maincontainerId="#maincontainer"+id
  var maincontainerValue=\$(maincontainerId).val()
@@ -78,13 +86,13 @@ function sumbit_form(id)
   success: function(html){
 
 
-    \$("#capture_relult").html("success");
+    \$(capture_relultId).html(html);
   }
   ,
   fail: function()
   {
 
-    \$("#capture_relult").html("fail");
+    \$(capture_relultId).html("fail");
   }      
 });
 
@@ -93,11 +101,16 @@ function sumbit_form(id)
 <p><select id="select_view"   onchange="select_from_view()" ><option id="viewpage1" onclick="page_view(this)">View Page1</option><option id="viewpage2" >View Page2</option></select></p>
 
 <form   id="view1" hidden="true">
-<table  ><tr><td  id="label">Drop down list label </td><td id="label1" > Text box label </td><td></td></tr><tr><td id="droplist0"></td><td style="vertical-align: top;"><input id="maincontainer0" type="text"    name="textbox" /></td>  <td style="vertical-align: top;"><a href="#"  id="submit" onclick="sumbit_form(0)" >Sumbit</a> </td> <input type="hidden" name="dropDownvalue0" id="dropDownvalue0" /> </tr></table>
+<table  ><tr><td  id="label">Drop down list label 1 </td><td id="label1" > Text box label 1 </td><td></td></tr><tr><td id="droplist0"></td><td style="vertical-align: top;"><input id="maincontainer0" type="text"    name="textbox" /></td>  <td style="vertical-align: top;"><a href="#"  id="submit" onclick="sumbit_form(0)" >Sumbit</a> </td> <input type="hidden" name="dropDownvalue0" id="dropDownvalue0" /> </tr></table>
+
+
+<p id="capture_relult0"></p>
 </form>
-<p id="capture_relult"></p>
+
 <form  id="view2" hidden="true">
-<table ><tr><td id="label">Drop down list label </td><td id="label1" > Text box label </td><td></td><td></td></tr><tr><td id="droplist1"></td><td style="vertical-align: top;"><input id="maincontainer1" type="text"  name="textbox" /></td> <td style="vertical-align: top;"><a href="#"  id="submit" onclick="sumbit_form(1)" >Sumbit</a> </td> <input type="hidden" name="dropDownvalue1" id="dropDownvalue1" /></tr></table>
+<table ><tr><td id="label">Drop down list label 2 </td><td id="label1" > Text box label 2 </td><td></td><td></td></tr><tr><td id="droplist1"></td><td style="vertical-align: top;"><input id="maincontainer1" type="text"  name="textbox" /></td> <td style="vertical-align: top;"><a href="#"  id="submit" onclick="sumbit_form(1)" >Sumbit</a> </td> <input type="hidden" name="dropDownvalue1" id="dropDownvalue1" /></tr></table>
+
+<p id="capture_relult1"></p>
 </form>
 </body>
 </html>

@@ -9,8 +9,18 @@ open( my $fh, '>>', "logfile" );
 
 
 
-my @column_names =("table_name","INFO");
-my @table_names=("dba_tables", "help");
+#my @column_names =("table_name","INFO");
+#my @table_names=("dba_tables", "help");
+
+my %first_table = (
+   'table_name' => 'dba_tables',
+   'column_name' => 'table_name'
+);
+
+my %second_table = (
+   'table_name' => 'help',
+   'column_name' => 'INFO'
+);
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
@@ -35,9 +45,26 @@ my $index=$query->param('index');
 my $sth;
 eval
 {
+if ($index == 0)
+{
 
-my $myquery1 = "SELECT $column_names[$index]  from $table_names[$index] ";
-$sth = $dbh->prepare($myquery1);
+
+
+    # we may change to select filed from table1
+    my $myquery1 = "SELECT $first_table{'column_name'}  from $first_table{'table_name'} ";
+    $sth = $dbh->prepare($myquery1);
+}
+else
+{
+
+    
+
+    # we may change to select filed from table2
+    my $myquery2 = "SELECT $second_table{'column_name'}  from $second_table{'table_name'} ";
+    $sth = $dbh->prepare($myquery2);
+}
+
+
 $sth->execute();
 };
 if($@)
