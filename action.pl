@@ -5,17 +5,15 @@ use CGI;
 use DBI;
 use DBD::Oracle;
 my $dbh;
-open( my $fh, '>>', "logfile" );
 
 
 my $db_name="Oracle:xe";
 my $user="SYSTEM";
 my $password="ps";
-my @inserted_tables=( "table1", "table3" ) ;
 
 my %first_table_object=(
-	column_names => [ "FIELD1" , "FIELD2" ],
-	table_name =>  [ "table1" ]
+	column_names => [ "filed1" , "field2" ],
+	table_name =>  [ "table4" ]
 );
 
 
@@ -37,7 +35,6 @@ eval
 if($@)
 {
 	print $@;
-	print $fh $@;
 	die("couldn't connect $@");
 }
 
@@ -55,13 +52,13 @@ eval
          {
 
 	  # we may change to insert into table_name(column1,column2)  values(?,?)
-         $sth=$dbh->prepare("insert into $first_table_object{table_name}[0] ($first_table_object{column_names}[0] , $first_table_object{column_names}[1] )  values(  ?, ? )");
+         $sth=$dbh->prepare("insert into $first_table_object{table_name}[0] ($first_table_object{column_names}[0] , $first_table_object{column_names}[1] )  values(  ?, ? )") or die $dbh->errstr;
          }
          else
          {
 	
 	  # we may change to insert into table_name(column1,column2)  values(?,?)
-         $sth=$dbh->prepare("insert into $second_table_object{table_name}[0] ($second_table_object{column_names}[0] , $second_table_object{column_names}[1] )  values(  ?, ? )");
+         $sth=$dbh->prepare("insert into $second_table_object{table_name}[0] ($second_table_object{column_names}[0] , $second_table_object{column_names}[1] )  values(  ?, ? )") or die $dbh->errstr ;
          }
 
 	 if(defined($sth))
@@ -77,8 +74,6 @@ eval
 if($@)
 {
           print $@;
-	  print $fh $@;
 	  die("ERROR $@");
 }
-print "Succesfuly inserted";
-close $fh;
+print "Succesfuly inserted" ;

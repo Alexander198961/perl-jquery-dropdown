@@ -31,13 +31,18 @@ if (selectedView == "View Page1")
    \$("#view1").removeAttr("hidden");
 
     \$("#view2").attr("hidden",1)
+
+    \$("#capture_relult1").html("")
     capture(0)
 }
 else
 {
 \$("#view2").removeAttr("hidden");
 
+
     \$("#view1").attr("hidden",1)
+
+    \$("#capture_relult0").html("")
  capture(1)
 }
 }
@@ -97,8 +102,19 @@ function sumbit_form(id)
 });
 
 }
+count=0
+function selector()
+{
+count++
+if(count%2 == 0)
+{
+
+count=0
+}
+
+}
 </script>
-<p><select id="select_view"   onchange="select_from_view()" ><option id="viewpage1" onclick="page_view(this)">View Page1</option><option id="viewpage2" >View Page2</option></select></p>
+<p><select id="select_view"   onchange="select_from_view()" onclick="selector()"><option id="viewpage1" onclick="page_view(this)">View Page1</option><option id="viewpage2" >View Page2</option></select></p>
 
 <form   id="view1" hidden="true">
 <table  ><tr><td  id="label">Drop down list label 1 </td><td id="label1" > Text box label 1 </td><td></td></tr><tr><td id="droplist0"></td><td style="vertical-align: top;"><input id="maincontainer0" type="text"    name="textbox" /></td>  <td style="vertical-align: top;"><a href="#"  id="submit" onclick="sumbit_form(0)" >Sumbit</a> </td> <input type="hidden" name="dropDownvalue0" id="dropDownvalue0" /> </tr></table>
