@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use subs;
 use CGI;
 use DBI;
 use DBD::Oracle;
+$|++;
 my $dbh;
 
 
@@ -30,7 +32,7 @@ eval
 {
 	$dbh = DBI->connect("DBI:$db_name",
                          $user, $password,
-                         {'RaiseError' => 1 , ShowErrorStatement => 1} );
+                         {'RaiseError' => 1 , ShowErrorStatement => 1 , PrintError=>1 } );
 };
 if($@)
 {
@@ -50,10 +52,9 @@ eval
 #	 my %current_hash_obj;
 	 if ($index == 0 )
          {
-
 	  # we may change to insert into table_name(column1,column2)  values(?,?)
          $sth=$dbh->prepare("insert into $first_table_object{table_name}[0] ($first_table_object{column_names}[0] , $first_table_object{column_names}[1] )  values(  ?, ? )") or die $dbh->errstr;
-         }
+	}
          else
          {
 	
@@ -67,6 +68,7 @@ eval
          }
 	 else
 	 {
+		 $dbh->disconnect;
 		 die("Sth not defined");
 	 }
 #	$dbh->do("insert into $inserted_table values(  $value1, $value2 )");
@@ -74,6 +76,7 @@ eval
 if($@)
 {
           print $@;
+	  $dbh->disconnect;
 	  die("ERROR $@");
 }
 print "Succesfuly inserted" ;
