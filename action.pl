@@ -79,4 +79,13 @@ if($@)
 	  $dbh->disconnect;
 	  die("ERROR $@");
 }
-print "Succesfuly inserted" ;
+if($index==0 )
+{
+
+print " view page1 inserted successfuly " ;
+}
+else
+{
+
+print " view page2 inserted successfuly " ;
+}
