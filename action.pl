@@ -52,11 +52,28 @@ eval
 #	 my %current_hash_obj;
 	 if ($index == 0 )
          {
+
+
+	  if( $value1 eq $value2 )
+          {
+	     	print " page1 value same error "   ;
+		$dbh->disconnect;
+		exit;
+          }
+	
+          
 	  # we may change to insert into table_name(column1,column2)  values(?,?)
          $sth=$dbh->prepare("insert into $first_table_object{table_name}[0] ($first_table_object{column_names}[0] , $first_table_object{column_names}[1] )  values(  ?, ? )") or die $dbh->errstr;
 	}
          else
          {
+	
+	  if( $value1 eq $value2 )
+          {
+	     	print " page2 value same error " ;
+		$dbh->disconnect;
+		exit;
+          }
 	
 	  # we may change to insert into table_name(column1,column2)  values(?,?)
          $sth=$dbh->prepare("insert into $second_table_object{table_name}[0] ($second_table_object{column_names}[0] , $second_table_object{column_names}[1] )  values(  ?, ? )") or die $dbh->errstr ;
