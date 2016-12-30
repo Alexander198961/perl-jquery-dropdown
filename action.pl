@@ -24,15 +24,19 @@ my %second_table_object=(
 	table_name =>  [ "table3" ]
 );
 print qq(Content-type: text/html\n\n);
-my $html = <<EOT;
-EOT
-;
-print $html;
+
+my $query = new CGI;
+my $value1= $query->param('textbox');
+my $value2= $query->param('dropDownvalue');
+my $index=$query->param('index');
 eval
 {
+       if ($value1 ne $value2 )
+       {
 	$dbh = DBI->connect("DBI:$db_name",
                          $user, $password,
                          {'RaiseError' => 1 , ShowErrorStatement => 1 , PrintError=>1 } );
+       }
 };
 if($@)
 {
@@ -40,10 +44,7 @@ if($@)
 	die("couldn't connect $@");
 }
 
-my $query = new CGI;
-my $value1= $query->param('textbox');
-my $value2= $query->param('dropDownvalue');
-my $index=$query->param('index');
+
 my $sth;
 eval
 {
@@ -57,7 +58,6 @@ eval
 	  if( $value1 eq $value2 )
           {
 	     	print " page1 value same error "   ;
-		$dbh->disconnect;
 		exit;
           }
 	
@@ -71,7 +71,6 @@ eval
 	  if( $value1 eq $value2 )
           {
 	     	print " page2 value same error " ;
-		$dbh->disconnect;
 		exit;
           }
 	
@@ -93,16 +92,23 @@ eval
 if($@)
 {
           print $@;
+	  $sth->finish();
 	  $dbh->disconnect;
 	  die("ERROR $@");
 }
 if($index==0 )
 {
 
+
+
+$sth->finish();
+$dbh->disconnect;
 print " view page1 inserted successfuly " ;
 }
 else
 {
 
+$sth->finish();
+$dbh->disconnect;
 print " view page2 inserted successfuly " ;
 }
